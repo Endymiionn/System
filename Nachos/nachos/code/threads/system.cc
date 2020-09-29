@@ -33,6 +33,7 @@ SynchDisk *synchDisk;
 
 #ifdef USER_PROGRAM		// requires either FILESYS or FILESYS_STUB
 Machine *machine;		// user program memory and registers
+ConsoleDriver *consoledriver;
 #endif
 
 #ifdef NETWORK
@@ -193,6 +194,8 @@ Initialize (int argc, char **argv)
 #endif
 }
 
+
+
 //----------------------------------------------------------------------
 // Cleanup
 //      Nachos is halting.  De-allocate global data structures.
@@ -212,6 +215,8 @@ Cleanup ()
 #endif
 
 #ifdef USER_PROGRAM
+    delete consoledriver;
+    consoledriver = NULL;
     delete machine;
     machine = NULL;
 #endif
