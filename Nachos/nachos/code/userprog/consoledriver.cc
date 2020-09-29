@@ -11,7 +11,7 @@ ConsoleDriver::ConsoleDriver(const char *in, const char *out)
 {
 readAvail = new Semaphore("read avail", 0);
 writeDone = new Semaphore("write done", 0);
-console = ...
+console = new Console (in, out, ReadAvailHandler, WriteDoneHandler, NULL);
 }
 ConsoleDriver::~ConsoleDriver()
 {
@@ -21,12 +21,14 @@ delete readAvail;
 }
 void ConsoleDriver::PutChar(int ch)
 {
-// ...
+console->TX(ch);
+writeDone->P();
 }
 int ConsoleDriver::GetChar()
 {
-// ...
-4
+readAvail->P();
+int ch = console->RX();
+return ch;
 }
 void ConsoleDriver::PutString(const char s[])
 {

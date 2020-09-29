@@ -5,11 +5,10 @@
 #include "utility.h"
 #include "console.h"
 
-class ConsoleDriver:dontcopythis 
+class ConsoleDriver:dontcopythis
 {
     public:
     ConsoleDriver(const char *readFile, const char *writeFile);
-    3
     // initialize the hardware console device
     ~ConsoleDriver(); // clean up
     void PutChar(int ch); // Unix putchar(3S)

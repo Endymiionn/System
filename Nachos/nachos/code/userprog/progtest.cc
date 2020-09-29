@@ -13,6 +13,7 @@
 #include "console.h"
 #include "addrspace.h"
 #include "synch.h"
+#include "consoledriver.h"
 
 //----------------------------------------------------------------------
 // StartProcess
@@ -113,3 +114,25 @@ ConsoleTest (const char *in, const char *out)
     delete readAvail;
     delete writeDone;
 }
+
+
+#ifdef CHANGED
+
+void ConsoleDriverTest (const char *in, const char *out)
+{
+    char ch;
+    ConsoleDriver *test_consoledriver = new ConsoleDriver(in, out);
+    
+    while ((ch = test_consoledriver->GetChar()) != EOF)
+    {
+        test_consoledriver->PutChar('<');
+        test_consoledriver->PutChar(ch);
+        test_consoledriver->PutChar('>');
+    }
+    fprintf(stderr, "EOF detected in ConsoleDriver!\n");
+    
+
+    delete test_consoledriver;
+}
+
+#endif //CHANGED
