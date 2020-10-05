@@ -81,6 +81,12 @@ ExceptionHandler (ExceptionType which)
 		    DEBUG ('s', "Shutdown, initiated by user program.\n");
 		    interrupt->Halt ();
 		    break;
+			
+		  }
+		  case SC_PutChar:
+		  {
+			DEBUG('s',"PutChar\n");
+
 		  }
 		default:
 		  {
