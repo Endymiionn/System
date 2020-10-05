@@ -122,7 +122,7 @@ void ConsoleDriverTest (const char *in, const char *out)
 {
     char ch;
     ConsoleDriver *test_consoledriver = new ConsoleDriver(in, out);
-    
+
     while ((ch = test_consoledriver->GetChar()) != EOF)
     {
         test_consoledriver->PutChar('<');
@@ -130,7 +130,6 @@ void ConsoleDriverTest (const char *in, const char *out)
         test_consoledriver->PutChar('>');
     }
     fprintf(stderr, "EOF detected in ConsoleDriver!\n");
-    
 
     delete test_consoledriver;
 }

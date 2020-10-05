@@ -5,7 +5,7 @@
 #include "utility.h"
 #include "console.h"
 
-class ConsoleDriver:dontcopythis
+class ConsoleDriver
 {
     public:
     ConsoleDriver(const char *readFile, const char *writeFile);
