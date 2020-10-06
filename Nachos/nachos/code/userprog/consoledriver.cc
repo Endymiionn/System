@@ -32,7 +32,13 @@ return ch;
 }
 void ConsoleDriver::PutString(const char s[])
 {
-// ...
+    int i=0;
+    while(s[i] != '\0')
+    {
+        console->TX(s[i]);
+        writeDone->P();
+        i++;
+    }
 }
 void ConsoleDriver::GetString(char *s, int n)
 {

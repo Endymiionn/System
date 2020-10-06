@@ -15,6 +15,8 @@
 #include "synch.h"
 #include "consoledriver.h"
 
+
+
 //----------------------------------------------------------------------
 // StartProcess
 //      Run a user program.  Open the executable, load it into
@@ -115,9 +117,6 @@ ConsoleTest (const char *in, const char *out)
     delete writeDone;
 }
 
-
-#ifdef CHANGED
-
 void ConsoleDriverTest (const char *in, const char *out)
 {
     char ch;
@@ -134,4 +133,3 @@ void ConsoleDriverTest (const char *in, const char *out)
     delete test_consoledriver;
 }
 
-#endif //CHANGED

@@ -41,6 +41,19 @@ UpdatePC ()
     machine->WriteRegister (NextPCReg, pc);
 }
 
+int copyStringFromMachine(int from, char *to, unsigned size)
+{
+    int i=0;
+    int result;
+    while((i<size)&&(machine->ReadMem(from+i, 1, &result)))
+    {
+        *(to+i) = char(result);
+        i++;
+    }
+    *(to+i) = '\0';
+    return i;
+}
+
 
 //----------------------------------------------------------------------
 // ExceptionHandler
@@ -84,13 +97,21 @@ ExceptionHandler (ExceptionType which)
 		    break;
 
 		  }
-		  case SC_PutChar:
+		case SC_PutChar:
 		  {
 			DEBUG('s',"PutChar\n");
 			int ch = machine->ReadRegister(4);
 			consoledriver->PutChar(ch);
 			break;
 		  }
+
+		case SC_PutString:
+		{
+			MAX_STRING_SIZE = 10;
+			char buff[MAX_STRING_SIZE];
+			buff = machine->ReadRegister(4);
+			copyStringFromMachine()
+		}
 		default:
 		  {
 		    printf("Unimplemented system call %d\n", type);
