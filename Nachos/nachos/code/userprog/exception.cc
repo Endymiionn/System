@@ -24,6 +24,7 @@
 #include "copyright.h"
 #include "system.h"
 #include "syscall.h"
+#include "consoledriver.h"
 
 //----------------------------------------------------------------------
 // UpdatePC : Increments the Program Counter register in order to resume
@@ -81,12 +82,14 @@ ExceptionHandler (ExceptionType which)
 		    DEBUG ('s', "Shutdown, initiated by user program.\n");
 		    interrupt->Halt ();
 		    break;
-			
+
 		  }
 		  case SC_PutChar:
 		  {
 			DEBUG('s',"PutChar\n");
-
+			int ch = machine->ReadRegister(4);
+			consoledriver->PutChar(ch);
+			break;
 		  }
 		default:
 		  {
