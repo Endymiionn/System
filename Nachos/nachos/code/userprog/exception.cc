@@ -99,18 +99,21 @@ ExceptionHandler (ExceptionType which)
 		  }
 		case SC_PutChar:
 		  {
+			int ch = machine->ReadRegister(4); //recuperation du registre 4 = arg1
 			DEBUG('s',"PutChar\n");
-			int ch = machine->ReadRegister(4);
 			consoledriver->PutChar(ch);
 			break;
 		  }
 
 		case SC_PutString:
 		{
-			MAX_STRING_SIZE = 10;
-			char buff[MAX_STRING_SIZE];
-			buff = machine->ReadRegister(4);
-			copyStringFromMachine()
+			char *to = new char[MAX_STRING_SIZE+1]; // +1 pour le \0
+			int ch = machine->ReadRegister(4); //recuperation string
+			copyStringFromMachine(ch, to, MAX_STRING_SIZE); //copie string mips -> linux
+			DEBUG('s', "PutString\n");
+			consoledriver->PutString(to);
+			delete [] to;
+			break;
 		}
 		default:
 		  {

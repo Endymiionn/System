@@ -17,6 +17,8 @@
 #include "timer.h"
 #include "../userprog/consoledriver.h"
 
+#define MAX_STRING_SIZE 64
+
 // Initialization and cleanup routines
 extern void Initialize (int argc, char **argv);	// Initialization,
 						// called before anything else
@@ -29,7 +31,6 @@ extern Scheduler *scheduler;	// the ready list
 extern Interrupt *interrupt;	// interrupt status
 extern Statistics *stats;	// performance metrics
 extern Timer *timer;		// the hardware alarm clock
-int MAX_STRING_SIZE;
 
 #ifdef USER_PROGRAM
 #include "machine.h"
