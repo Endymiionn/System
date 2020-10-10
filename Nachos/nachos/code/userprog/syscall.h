@@ -31,8 +31,12 @@
 #define SC_Close	8
 #define SC_Fork		9
 #define SC_Yield	10
+
 #define SC_PutChar  11
 #define SC_PutString 12
+
+#define SC_GetChar 13
+#define SC_GetString 14
 
 #ifdef IN_USER_MODE
 
@@ -135,6 +139,12 @@ void Yield ();
 void PutChar(char c);
 
 void PutString(const char s[]);
+
+int GetChar();
+
+void GetString(char* s, int n);
+
+
 
 #endif // IN_USER_MODE
 

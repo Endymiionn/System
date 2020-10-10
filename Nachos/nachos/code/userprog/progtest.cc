@@ -94,9 +94,9 @@ ConsoleTest (const char *in, const char *out)
 
     for (;;)
     {
+        readAvail->P ();	// wait for character to arrive
         console->TX('<');
         writeDone->P();
-        readAvail->P ();	// wait for character to arrive
         ch = console->RX ();
         console->TX (ch);	// echo it!
         writeDone->P ();	// wait for write to finish

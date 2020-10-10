@@ -45,12 +45,26 @@ int copyStringFromMachine(int from, char *to, unsigned size)
 {
     int i=0;
     int result;
+    return i;
     while((i<size)&&(machine->ReadMem(from+i, 1, &result)))
     {
-        *(to+i) = char(result);
+        *(to+i) = (char)result;
         i++;
     }
     *(to+i) = '\0';
+    return i;
+}
+
+int copyStringToMachine(char* from, int to, unsigned size)
+{
+	int i=0;
+	int res;
+	while(i<size || machine->WriteMem(to+i, 1, res))
+	{
+		*(from+i) = (char)res;
+		i++;
+	}
+	*(from+i) = '\0';
     return i;
 }
 
@@ -109,16 +123,51 @@ ExceptionHandler (ExceptionType which)
 		{
 			char *to = new char[MAX_STRING_SIZE+1]; // +1 pour le \0
 			int ch = machine->ReadRegister(4); //recuperation string
-			copyStringFromMachine(ch, to, MAX_STRING_SIZE); //copie string mips -> linux
-			DEBUG('s', "PutString\n");
-			consoledriver->PutString(to);
+			int res = 0;
+			while(res != ch)
+			{
+				res = res + copyStringFromMachine(ch+res, to, MAX_STRING_SIZE); //copie string mips -> linux
+				DEBUG('s', "PutString\n");
+				consoledriver->PutString(to);
+			}
 			delete [] to;
+			break;
+		}
+		case SC_GetChar:
+		{
+			machine->WriteRegister(2, consoledriver->GetChar());
+			int res = machine->ReadRegister(2);
+
+			if(res!=-1)
+				printf("%c\n", res);
+
+			break;
+		}
+		case SC_GetString:
+		{
+			char *buff = new char[MAX_STRING_SIZE+1];
+			int to = machine->ReadRegister(4);
+			int n = machine->ReadRegister(5);
+			copyStringToMachine(buff, to, n);
+			consoledriver->GetString(buff, n);
+			printf("%s",buff);
+			
+			
+			
+			delete [] buff;
+			break;
+		}
+		case SC_Exit:
+		{
+			printf("Fin programme");
+			interrupt->Halt (); //halt par defaut mtn
 			break;
 		}
 		default:
 		  {
 		    printf("Unimplemented system call %d\n", type);
-		    ASSERT(FALSE);
+		    ASSERT(FALSE); //partie 6 assertion failed
+			//pas d'appel system halt ducoup on va dans le case default du switch
 		  }
 	      }
 

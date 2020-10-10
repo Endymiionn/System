@@ -12,6 +12,7 @@ void print(char c, int n)
 }
 int main()
 {
+    int i = 12;
     print('a',4);
-    Halt();
+    return i;
 }
