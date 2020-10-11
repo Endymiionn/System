@@ -43,26 +43,26 @@ UpdatePC ()
 
 int copyStringFromMachine(int from, char *to, unsigned size)
 {
-    unsigned i=0;
-    int result;
-    while((i<size)&&(machine->ReadMem(from+i, 1, &result)))
+    unsigned i=0; //compteur allant jusqu'a size-1
+    int result; //variable temporaire de l'écriture de from+i
+    while((i<size)&&(machine->ReadMem(from+i, 1, &result))) //tant qu'on ne depasse pas la taille et qu'on lit un char
     {
-        *(to+i) = (char)result;
+        *(to+i) = (char)result; //écriture du resultat dans l'adresse machine
         i++;
     }
-    *(to+i) = '\0';
+    *(to+i) = '\0'; //écriture du symbole de fin de chaine
     return i;
 }
 
 int copyStringToMachine(char* from, int to, unsigned size)
 {
-	unsigned i=0;
-	while(i<size && from[i] != '\0')
+	unsigned i=0; //compteur allant jusqu'a size-1
+	while(i<size && from[i] != '\0') //tant que la chaine n'est pas fini ou qu'on ne passe pas la taille
 	{
-		machine->WriteMem(to+i, 1, from[i]);
+		machine->WriteMem(to+i, 1, from[i]); //ecriture dans la memoire de la machine
 		i++;
 	}
-	machine->WriteMem(to+i, 1, '\0');
+	machine->WriteMem(to+i, 1, '\0'); //fin de chaine
     return i;
 }
 
@@ -124,37 +124,38 @@ ExceptionHandler (ExceptionType which)
 			int res = 0;
 			while(res != ch)
 			{
-				res = res + copyStringFromMachine(ch+res, to, MAX_STRING_SIZE); //copie string mips -> linux
+				//copie du string entierement
+				res = res + copyStringFromMachine(ch+res, to, MAX_STRING_SIZE); //copie string mips -> linux 
 				DEBUG('s', "PutString\n");
-				consoledriver->PutString(to);
+				consoledriver->PutString(to); //stockage de la string dans to;
 			}
 			delete [] to;
 			break;
 		}
 		case SC_GetChar:
 		{
-			machine->WriteRegister(2, consoledriver->GetChar());
-			int res = machine->ReadRegister(2);
+			machine->WriteRegister(2, consoledriver->GetChar()); //stockage du char dans le registre 2
+			int res = machine->ReadRegister(2); //recuperation du char dans le registre 2
 
 			if(res!=-1)
 				printf("%c\n", res);
-
 			break;
 		}
 		case SC_GetString:
 		{
-			char *buff = new char[MAX_STRING_SIZE+1];
-			int to = machine->ReadRegister(4);
-			int n = machine->ReadRegister(5);
-			consoledriver->GetString(buff, n);
-			copyStringToMachine(buff, to, n);	
+			char *buff = new char[MAX_STRING_SIZE+1]; // +1 pour le \0
+			int to = machine->ReadRegister(4); //recuperation de l'adresse mips (1er argument)
+			int n = machine->ReadRegister(5); //recuperation de la taille (2eme argument)
+			consoledriver->GetString(buff, n); //stockage du string dans le buffer
+			copyStringToMachine(buff, to, n); //ecriture en memoire du buffer à l'adresse to	
 			delete [] buff;
 			break;
 		}
 		case SC_Exit:
 		{
+			//on rentre dans ce case quand on sort du programme
 			printf("Fin programme");
-			interrupt->Halt (); //halt par defaut mtn
+			interrupt->Halt (); //halt par defaut maintenant 
 			break;
 		}
 		default:
