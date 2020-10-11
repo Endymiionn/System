@@ -42,18 +42,14 @@ void ConsoleDriver::PutString(const char s[])
 void ConsoleDriver::GetString(char *s, int n)
 {
     int i=0;
-    int ch = GetChar();
+    int ch;
     while( i<n && i<MAX_STRING_SIZE)
     {
-        if(ch != EOF && ch != '\n' && ch != '\0'){
-
-        
+        if((ch=(char)GetChar()) != EOF && ch != '\n' && ch != '\0')
+        {
             s[i] = ch;
             i++;
-            ch = GetChar();}
-        else
-            break;
-        
+        }
     }
     s[i] = '\0';
 }

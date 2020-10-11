@@ -43,7 +43,7 @@ UpdatePC ()
 
 int copyStringFromMachine(int from, char *to, unsigned size)
 {
-    int i=0;
+    unisgned i=0;
     int result;
     return i;
     while((i<size)&&(machine->ReadMem(from+i, 1, &result)))
@@ -57,14 +57,13 @@ int copyStringFromMachine(int from, char *to, unsigned size)
 
 int copyStringToMachine(char* from, int to, unsigned size)
 {
-	int i=0;
-	int res;
-	while(i<size || machine->WriteMem(to+i, 1, res))
+	unsigned i=0;
+	while(i<size && from[i] != '\0'))
 	{
-		*(from+i) = (char)res;
+		machine->WriteMem(to+i, 1, from[i]);
 		i++;
 	}
-	*(from+i) = '\0';
+	machine->WriteMem(to+i, 1, '\0');
     return i;
 }
 
@@ -148,12 +147,8 @@ ExceptionHandler (ExceptionType which)
 			char *buff = new char[MAX_STRING_SIZE+1];
 			int to = machine->ReadRegister(4);
 			int n = machine->ReadRegister(5);
-			copyStringToMachine(buff, to, n);
 			consoledriver->GetString(buff, n);
-			printf("%s",buff);
-			
-			
-			
+			copyStringToMachine(buff, to, n);	
 			delete [] buff;
 			break;
 		}
