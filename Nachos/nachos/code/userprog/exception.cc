@@ -43,9 +43,8 @@ UpdatePC ()
 
 int copyStringFromMachine(int from, char *to, unsigned size)
 {
-    unisgned i=0;
+    unsigned i=0;
     int result;
-    return i;
     while((i<size)&&(machine->ReadMem(from+i, 1, &result)))
     {
         *(to+i) = (char)result;
@@ -58,7 +57,7 @@ int copyStringFromMachine(int from, char *to, unsigned size)
 int copyStringToMachine(char* from, int to, unsigned size)
 {
 	unsigned i=0;
-	while(i<size && from[i] != '\0'))
+	while(i<size && from[i] != '\0')
 	{
 		machine->WriteMem(to+i, 1, from[i]);
 		i++;
