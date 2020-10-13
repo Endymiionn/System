@@ -59,7 +59,7 @@ int copyStringToMachine(char* from, int to, unsigned size)
 {
 	int i=0;
 	int res;
-	while(i<size || machine->WriteMem(to+i, 1, res))
+	while(i<size && machine->WriteMem(to+i, 1, res))
 	{
 		*(from+i) = (char)res;
 		i++;
@@ -151,9 +151,6 @@ ExceptionHandler (ExceptionType which)
 			copyStringToMachine(buff, to, n);
 			consoledriver->GetString(buff, n);
 			printf("%s",buff);
-			
-			
-			
 			delete [] buff;
 			break;
 		}
