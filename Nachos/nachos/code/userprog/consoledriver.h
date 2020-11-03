@@ -15,6 +15,7 @@ class ConsoleDriver
     int GetChar(); // Unix getchar(3S)
     void PutString(const char *s); // Unix fputs(3S)
     void GetString(char *s, int n); // Unix fgets(3S)
+
     private:
     Console *console;
 };

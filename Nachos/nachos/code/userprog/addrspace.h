@@ -41,6 +41,8 @@ class AddrSpace:dontcopythis
 				// Dump program layout as SVG
     unsigned NumPages() { return numPages; }
 
+    int AllocateUserStack(); //return new thread StackPointeur (StackReg)
+
   private:
     NoffHeader noffH;		// Program layout
 

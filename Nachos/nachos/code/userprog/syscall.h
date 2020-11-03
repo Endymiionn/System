@@ -38,6 +38,9 @@
 #define SC_GetChar 13
 #define SC_GetString 14
 
+#define SC_ThreadCreate 15
+#define SC_ThreadExit 16
+
 #ifdef IN_USER_MODE
 
 // LB: This part is read only on compiling the test/*.c files.
@@ -144,6 +147,9 @@ int GetChar();
 
 void GetString(char* s, int n);
 
+int ThreadCreate(void f(void* arg), void* arg);
+
+void ThreadExit(void);
 
 
 #endif // IN_USER_MODE

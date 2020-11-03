@@ -93,7 +93,7 @@ class Thread:dontcopythis
     // basic thread operations
 
     void Start (VoidFunctionPtr func, void *arg);	// Make thread run (*func)(arg)
-    void Yield ();		// Relinquish the CPU if any 
+    void Yield ();		// Relinquish the CPU if any
     // other thread is runnable
     void Sleep ();		// Put the thread to sleep and 
     // relinquish the processor

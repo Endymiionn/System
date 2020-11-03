@@ -125,7 +125,7 @@ ExceptionHandler (ExceptionType which)
 			while(res != ch)
 			{
 				//copie du string entierement
-				res = res + copyStringFromMachine(ch+res, to, MAX_STRING_SIZE); //copie string mips -> linux 
+				res = res + copyStringFromMachine(ch+res, to, MAX_STRING_SIZE); //copie string mips -> linux
 				DEBUG('s', "PutString\n");
 				consoledriver->PutString(to); //stockage de la string dans to;
 			}
@@ -147,7 +147,7 @@ ExceptionHandler (ExceptionType which)
 			int to = machine->ReadRegister(4); //recuperation de l'adresse mips (1er argument)
 			int n = machine->ReadRegister(5); //recuperation de la taille (2eme argument)
 			consoledriver->GetString(buff, n); //stockage du string dans le buffer
-			copyStringToMachine(buff, to, n); //ecriture en memoire du buffer à l'adresse to	
+			copyStringToMachine(buff, to, n); //ecriture en memoire du buffer à l'adresse to
 			delete [] buff;
 			break;
 		}
@@ -155,8 +155,16 @@ ExceptionHandler (ExceptionType which)
 		{
 			//on rentre dans ce case quand on sort du programme
 			printf("Fin programme");
-			interrupt->Halt (); //halt par defaut maintenant 
+			interrupt->Halt (); //halt par defaut maintenant
 			break;
+		}
+		case SC_ThreadCreate:
+		{
+
+		}
+		case SC_ThreadExit:
+		{
+
 		}
 		default:
 		  {

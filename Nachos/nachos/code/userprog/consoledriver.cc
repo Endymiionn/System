@@ -52,3 +52,4 @@ void ConsoleDriver::GetString(char *s, int n)
     }
     s[i] = '\0'; // fin de chaine
 }
+

@@ -162,7 +162,7 @@ AddrSpace::InitRegisters ()
     for (i = 0; i < NumTotalRegs; i++)
 	machine->WriteRegister (i, 0);
 
-    // Initial program counter -- must be location of "Start"
+    // Initial program counter -- must be loc ation of "Start"
     machine->WriteRegister (PCReg, USER_START_ADDRESS);
 
     // Need to also tell MIPS where next instruction is, because
@@ -291,4 +291,10 @@ AddrSpace::RestoreState ()
 {
     machine->currentPageTable = pageTable;
     machine->currentPageTableSize = numPages;
+}
+
+int
+AddrSpace::AllocateUserStack()
+{
+    return numPages * PageSize - 16 - 256;
 }
