@@ -25,6 +25,7 @@
 #include "system.h"
 #include "syscall.h"
 #include "consoledriver.h"
+#include "userthread.h"
 
 //----------------------------------------------------------------------
 // UpdatePC : Increments the Program Counter register in order to resume
@@ -160,11 +161,16 @@ ExceptionHandler (ExceptionType which)
 		}
 		case SC_ThreadCreate:
 		{
-
+			int addrFct = machine->ReadRegister(4);
+			int addrArg = machine->ReadRegister(5);
+			int res = do_ThreadCreate(addrFct, addrArg);
+			machine->WriteRegister(2, res);
+			break;
 		}
 		case SC_ThreadExit:
 		{
-
+			do_ThreadExit();
+			break;
 		}
 		default:
 		  {
